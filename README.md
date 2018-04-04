@@ -52,6 +52,9 @@ MongoDB console earlier.
 5100
 ```
 
+Now, MongoDB is recording *all* queries sent to your local database. You can
+perform whatever actions you want to profile, then proceed to the next step.
+
 When you want to save a profile, run the following back in your *OS console* (i.e.
 not Mongo). This will save the analysis of `YOUR_DATABASE` to a file in the
 current directory with a filename starting with `YOUR_FILENAME`.
