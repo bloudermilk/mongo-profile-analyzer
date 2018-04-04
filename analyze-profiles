@@ -1,0 +1,37 @@
+#!/usr/bin/env ruby
+
+require 'json'
+
+def analyze(profile)
+  profile.reduce({}) do |stats, query|
+    ns, op = query[:ns], query[:op]
+
+    stats[ns] ||= {}
+    stats[ns][op] = stats[ns].fetch(op, 0) + 1
+
+    stats
+  end
+end
+
+Dir['*.profile.json'].each do |profile|
+  puts "#{profile}\n\n"
+
+  json = JSON.parse(File.read(profile), symbolize_names: true)
+
+  puts "#{json.length}\tTotal\n\n"
+
+  stats = analyze(json)
+
+  stats.sort_by { |_, o| -o.values.sum }.each do |ns, ops|
+    total = ops.values.sum
+    collection = ns.split('.').last
+    col_space = ' ' * (60 - collection.length)
+    ops_str = ops.sort_by { |_, c| -c }.map do |op, count|
+      "#{op}: #{count}"
+    end.join("\t")
+
+    puts "#{total}\t#{collection}#{col_space}#{ops_str}"
+  end
+
+  puts "\n\n------------------------------------\n\n"
+end
