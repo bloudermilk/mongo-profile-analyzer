@@ -1,6 +1,7 @@
 # MongoDB Profile Analyzer
 
-Get to know your MongoDB queries!
+Get to know your MongoDB queries! Count total queries, queries by collection,
+and operations by collection.
 
 ```
 signup-step-1.profile.json
